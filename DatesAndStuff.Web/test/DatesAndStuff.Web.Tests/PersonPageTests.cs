@@ -142,6 +142,25 @@ public class PersonPageTests
         var fieldError = driver.FindElement(By.ClassName("validation-message"));
         fieldError.Text.Should().Be("The specified percentag should be between -10 and infinity.");
     }
+
+    [Test]
+    public void BlazeDemo_CheckFlightsBetweenMexicoCityAndDublin()
+    {
+        driver.Navigate().GoToUrl("https://blazedemo.com");
+
+        driver.FindElement(By.Name("fromPort")).Click();
+        driver.FindElement(By.XPath("//select[@name='fromPort']/option[@value='Mexico City']")).Click();
+
+        driver.FindElement(By.Name("toPort")).Click();
+        driver.FindElement(By.XPath("//select[@name='toPort']/option[@value='Dublin']")).Click();
+
+        driver.FindElement(By.CssSelector("input[type='submit']")).Click();
+
+        var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+        var rows = wait.Until(d => d.FindElements(By.CssSelector("table.table tbody tr")));
+
+        rows.Count.Should().BeGreaterThanOrEqualTo(3, "there should be at least three flights between Mexico City and Dublin");
+    }
     private bool IsElementPresent(By by)
     {
         try
