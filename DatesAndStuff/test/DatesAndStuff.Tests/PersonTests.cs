@@ -96,18 +96,43 @@ public class PersonTests
     [Test]
     public void IncreaseSalary_ZeroPercentIncrease_ShouldNotChange()
     {
-        // throw new NotImplementedException();
+        // Arrange
+        var sut = PersonFactory.CreateTestPerson();
+        double initialSalary = sut.Salary;
+
+        // Act
+        sut.IncreaseSalary(0);
+
+        // Assert
+        sut.Salary.Should().Be(initialSalary);
     }
 
     [Test]
     public void IncreaseSalary_NegativeIncrease_ShouldDecrease()
     {
-        // throw new NotImplementedException();
+        // Arrange
+        var sut = PersonFactory.CreateTestPerson();
+        double initialSalary = sut.Salary;
+        double decreasePercentage = -10;
+
+        // Act
+        sut.IncreaseSalary(decreasePercentage);
+
+        // Assert
+        sut.Salary.Should().BeLessThan(initialSalary);
+        sut.Salary.Should().BeApproximately(initialSalary * 0.95, 0.001);
     }
 
     [Test]
     public void IncreaseSalary_SmallerThanMinusTenPerc_ShouldFail()
     {
-        // throw new NotImplementedException();
+        // Arrange
+        var sut = PersonFactory.CreateTestPerson();
+
+        // Act
+        Action act = () => sut.IncreaseSalary(-10.01);
+
+        // Assert
+        act.Should().Throw<ArgumentException>();
     }
 }
