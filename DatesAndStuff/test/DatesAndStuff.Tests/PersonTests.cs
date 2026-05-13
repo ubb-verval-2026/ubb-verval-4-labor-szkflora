@@ -120,7 +120,7 @@ public class PersonTests
 
         // Assert
         sut.Salary.Should().BeLessThan(initialSalary);
-        sut.Salary.Should().BeApproximately(initialSalary * 0.95, 0.001);
+        sut.Salary.Should().BeApproximately(initialSalary * 0.90, 0.001);
     }
 
     [Test]
